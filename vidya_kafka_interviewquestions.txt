@@ -1,0 +1,597 @@
+1)signicas of consumer >> Use kafka-consumer-groups.sh to list all consumer group
+2)where is consumer specify
+3)bydefault how many partitions we can defind for topics
+num.partitions=1
+inside /srv/kafka/kafka_2.12-2.8.1/config/server.properties
+4)what is ISR (In sync replica) and replica
+5)what type of kafka falvour your are  using >> Apache kafka
+6) What model does Kafka use for consumers?
+Kafka consumers use a pull model to consume data. This means that a consumer periodically sends a request to a
+ Kafka broker in order to fetch data from it. This is called a FetchRequest
+
+7) what is replication in kafka and count of replication
+Definition of Kafka Replication Factor. Replication Factor in Kafka is basically the multiple copies of data over the multiple brokers. Replication 
+is done to ensure the high availability of data and secures the data loss when the broker fails or unavailable to serve the request.
+
+8)What protocol does Kafka support?
+  Kafka uses a binary protocol over TCP. The protocol defines all APIs as request response message pairs.
+ All messages are size delimited and are made up of the following primitive types.
+
+9)What is Kafka retention period?
+The most common configuration for how long Kafka will retain messages is by time. The default is specified in the configuration 
+file using the log. retention. hours parameter, and it is set to 168 hours, the equivalent of one week.
+
+10)What is replication factor in Kafka?
+Kafka Replication Factor refers to the multiple copies of data stored across several Kafka brokers. 
+Setting the Kafka Replication Factor allows Kafka to provide high availability of data and prevent data loss if the broker goes down or cannot handle the
+ request.
+
+11)Is Kafka a language?
+Apache Kafka is a distributed event store and stream-processing platform.
+...
+Kafka flavors.
+=====================
+kafka is written in scala/java
+so you need just 1 flavour
+since java part handles that part
+Apache Kafka
+---------------------.
+Original author(s) >>	LinkedIn
+Written in >> 	Scala, Java
+Operating system >> Cross-platform
+Type >> Stream processing, Message broker
+License	>> Apache License 2.0
+
+12)What is partition offset in Kafka?
+Kafka maintains a numerical offset for each record in a partition. This offset acts as a unique identifier of a record within that partition, 
+and also denotes the position of the consumer in the partition.
+13)What is the role of leader in Kafka?
+A leader handles all read and write requests for a partition while the followers passively replicate the leader.
+ Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.
+14)What port does Kafka use?
+9092
+Kafka service ports
+15)What is insync replicas in Kafka?
+Image result
+An in-sync replica (ISR) is a broker that has the latest data for a given partition. A leader is always an in-sync replica. 
+A follower is an in-sync replica only if it has fully caught up to the partition it's following. In other words, it can't be behind on the latest records for a 
+given partition.
+16)What is the difference between MQ and Kafka?
+Image result
+IBM MQ vs Kafka: Use Cases
+
+As a conventional Message Queue, IBM MQ has more features than Kafka. IBM MQ also supports JMS, making it a more convenient alternative to Kafka. Kafka, 
+on the other side, is better suited to large data frameworks such as Lambda. 
+Kafka also has connectors and provides stream processing.
+
+17) how to deploy the offering end to end process.
+18) what it can do?
+It can be used as on enterprise messaging system 
+It can be used for stream processing 
+It also provided connectors to import and export bulk data from database and other  system.
+It can be use as a steam processing plateform.
+it plugin processing framework 
+
+19)If we want locate specific message we must know three things
+Topic name -> partition number -> offset number.
+20)what is consumer group 
+It is a group of consumers multiple cosumers form a group to shared the work load 
+you can thing odf it about you have massive work this work load divided into small part among 
+the mutiple people. 
+
+21) kafka does't allowed more than 1 consumer to read and process data from the same partition
+simultanously.this restriction necessary to avoid  read duplication records.
+
+22) what is schema registry in kafka 
+Schema registry is use for storing the Avro schmeas in kakfa.Avro schemas support the Restful API for managing the Avro schemas.
+Using this Avro schema stored the data in searlize format.we get the kafka versions using this Restful API.
+
+23) what is offset commit in kafka.f
+
+24) What are main APIs of Kafka?
+There are five major APIs in Kafka: Producer API – Permits an application to publish streams of records. 
+Consumer API – Permits an application to subscribe to topics and processes streams of records. 
+Connector API – Executes the reusable producer and consumer APIs that can link the topics to the existing applications.
+
+25) Inside the offset topics hold the information that contains Partition info,Group info and offset info.
+Consumer one is die then how to know for consumer 2 from which offset  need to read the data there some mechanisum for consumer 2 should know from where 
+to read 
+these info stored in offset topic this topic basically hold the information partition info,Group info,offset info.then consumer reading from 
+offset topic Group info.  consumer offset are stored in specific topic _Consumer_offsets.
+Using commit offset we can't reprocess the data again again for every consumer.
+last commit offset stored the partition offset largest  number.when consumer onr die second consumer read the offset number from offset topic and not reprocess the messages 
+which proccessed by consumer1.
+26)Data types for Kafka connector
+JSON format. The JSON format enables you to read and write JSON data. ...
+CSV format. The CSV format allows your applications to read data from, and write data to different external sources in CSV. ...
+Avro format. ...
+Schema Registry Avro format.
+27)what is Kafka security.
+28) what is zookoras 
+29) What is Active controllar?
+30) what is beanch mark in kafka
+31)What is coordinator in Kafka?
+The group coordinator is nothing but one of the brokers which receives heartbeats (or polling for messages) from all consumers of a consumer group. Every consumer group has a group coordinator. If a consumer stops sending heartbeats, the coordinator will trigger a rebalance.
+32)What is Kafka connect used for?
+Kafka Connect is a framework to stream data into and out of Apache Kafka®
+33)Remember, Kafka only allows increasing the number of partitions, because decreasing it would cause in data loss..
+Apache Kafka doesn’t support decreasing the partition number. You should see the topic as a whole and the partitions are a way for scaling out improving performance.
+ So all data sent to topic flow to all partitions and removing one of them means data loss.
+34)controller
+Instead, we elect one of the brokers as the "controller". This controller detects failures at the broker level and is responsible for changing the leader of all affected partitions in a failed broker.
+35)Leader partitions are responsible for ensuring that the follower partitions keep their records in sync.
+Since the leader partitions are evenly distributed, most of the time the load to the overall Kafka cluster is relatively balanced.
+36)Kafka Serializer and Deserializer – A Kafka serializer and deserializer that uses Schema Registry.
+Schema Registry is present for both producer and consumer in a Kafka cluster in a Avro schemas and serialization and Deserialization
+Avro schemas enabled the configuration of compability parameter  between producer and consumers the kafka schmas registry is used to ensure 
+the schmeas used by consumer and schmeas used by producer or identical the producers just need to submit the schemas id and not the whole schmeas we use the confluence
+schemas registry in kafka the consumers looks for matching schemas in the schemas registry using schema id.
+37)Kafka Connect, also known as Apache Kafka®'s integration API, is scalable and fault tolerant. It helps you get data from systems other than Kafka into Kafka topics using pluggable connectors or, on the other hand, a client application. In this video, Tim 
+38) which are the kafka components >> Kafka streams,Kafka connect ,KSQL,kafka broker,kafka client.
+Kafka Broker:-which is the central server system
+Kafka Client APs':-which is the consumer and producer API liberary 
+Kafka Connect :- which address the initial data integration and problem which kafka was initially designed.
+Kafka streams:- this one is another liberary for creating real time stream processing applications 
+KSQL:-Kafka is now aiming to become a real time database and capture some market sharing databases and DWB space.
+
+39)smart meter Producer is sending three diff types of  producers.
+-->Current-Load - sent every minutes
+--> Consumed-unit -sent every hours
+--> Input-current-fluctuations-sent as  and when it happens.
+40)Topic is a unique name for data stream.it is just like database table.
+partition is a samllest unit and it is going to setting on a single m/c.you can not break it again to decided the number of partition for each topic.
+41)offeset is a unique sequence id of a message in the partition.sequence id is automatically assigned by the broker  to every message record as it arrived in the partition
+once assined these id's are not going to changed they are immutable.offset id first number is 0,1,2...and so on.these offsets are local within the partiton.there is no global ordering to the topic across partiton
+
+to solve the data integration problem.
+42) Kafka Connect is the component of Kafka for connecting and moving data between kafka and external system.
+We have two types of kafka connectors 
+(i)Source connector
+(ii)Sink Connector
+and thogether they are supporting bunch of systems and offer us out of the box data integration capability without writing a single line of code.
+43)Kafka connect architecture 
+1) Worker
+2) connectores
+3)Task
+Kafka connect is a cluster it will run one or more workers
+here use Worker Group id mechanisum.These workers and FalutTolerence and self managed If worker process stop and crashed other workers in connect 
+cluster will recognized that 
+and reassinged connector and task that run on that worker to the remaining worker and load is balanced so this provide the Reliability,
+High availability,Scalabilityand Load Balancing.
+
+Now lets assume I want to copy the data from Relational database so I download the JDBC source connector and installed it wthin the kafka connect
+also offered the rest API
+
+44)what is ttl in kafka?
+With retention period properties in place, messages have a TTL (time to live).
+There currently isn't a way to give a topic a TTL, where once the TTL expires Kafka automatically deletes the topic.
+
+45)What is Kafka Kerberos
+46)what to defind volumes in kafka topic
+47) Brokers handles hundreds of megabyets of read and write.
+A producer may only be able to send messages to a single topic at once.
+48) consumers can subscibe to multiple topics at once.
+Zookeeper notofies all the nodes when the cluster structure in changes,including when broker and topics are getting added or removed.
+
+49)Kafka Security (3 step process).
+1)Authentication:-This allows kafka producers and consumers applications to be authenticated to kafka cluster by verifying their identity.
+2)ACL Authorization:Once kafka client are  authenticated,kafka brokers can run them against access control lists(ACL)
+to determine whether or not a particulat client is authorized to write/read to some topic.
+3)encryption:This allows the data to be encrypted when flowing between a producers and consumers.
+50)Kafka SSL Authentication other way of authentication is SASL  authentication (Simple Authentication and Security Layer)
+Its becoming security standard in Big data applications.
+SASL in kafka currently implements following protocols.
+1.PlainText[Username/Password]
+2.SCRAM [Modern UserName / Password with challenge]
+3.GSSAPI [Kerberos Authentication /Active Directory Authentication].
+what is Kerberos:-
+It is kind of an Authentication protocol for client/server applications used over (unsecure) network and is designed for two 2 purpose -security and Authentication
+51) priorities th messages is not possible for Topics for this we required RabbitMQ using this messages can be consumed according to priority.
+
+Avro schemas is use for enabled the kafka
+In the Kafka world, Apache Avro is by far the most used serialization protocol. Avro is a data serialization
+ system. Combined with Kafka, it provides schema-based, robust, and fast binary serialization.
+52)What is replica count in Kafka?
+Kafka replication: 0 to 60 in 1 minute
+
+53)How many Kafka partitions is too many?
+But here are a few general rules: maximum 4000 partitions per broker (in total; distributed over many topics) maximum 200,000 partitions per
+ Kafka cluster (in total; distributed over many topics) resulting in a maximum of 50 brokers per Kafka cluster.
+54)How does Kafka increase replication factor?
+Increasing the replication factor can be done via the kafka-reassign-partitions tool. Specify the extra replicas in the custom reassignment json file and use it with the
+ --execute option to increase the replication factor of the specified partitions.
+
+55)What is the maximum value for replication factor of a Kafka topic?
+A broker can only host a single replica for a partition. So if your cluster has 3 brokers, the maximum replication factor you can have is 3.
+
+56) What is the maximum size of a message that Kafka can receive?
+By default, the maximum size of a Kafka message is 1MB (megabyte). The broker settings allow you to modify the size. 
+Kafka, on the other hand, is designed to handle 1KB messages as well
+57) What does it mean if a replica is not an In-Sync Replica for a long time?
+A replica that has been out of ISR for a long period of time indicates that the follower is unable to fetch data at the same rate as the leader.
+
+58)What are the use cases of Kafka monitoring?
+Following are the use cases of Kafka monitoring :
+
+Track System Resource Consumption: It can be used to keep track of system resources such as memory, CPU, and disk utilization over time.
+Monitor threads and JVM usage: Kafka relies on the Java garbage collector to free up memory, ensuring that it runs frequently thereby 
+guaranteeing that the Kafka cluster is more active.
+Keep an eye on the broker, controller, and replication statistics so that the statuses of partitions and replicas can be modified as needed.
+Finding out which applications are causing excessive demand and identifying performance bottlenecks might help solve performance issues rapidly. 
+
+59) What do you mean by Kafka schema registry?
+A Schema Registry is present for both producers and consumers in a Kafka cluster, and it holds Avro schemas. 
+For easy serialization and de-serialization, Avro schemas enable the configuration of compatibility parameters between producers and consumers.
+ The Kafka Schema Registry is used to ensure that the schema used by the consumer and the schema used by the producer are identical. 
+The producers just need to submit the schema ID and not the whole schema when using the Confluent schema registry in Kafka. 
+The consumer looks up the matching schema in the Schema Registry using the schema ID.
+
+Serialization is the process of converting objects into bytes. Deserialization is the inverse process — converting a stream of bytes into an object.
+==
+Encryption of data transferred between Kafka brokers and Kafka clients, between brokers, between brokers and ZooKeeper nodes, and between brokers and other, optional tools.
+Authentication of connections from Kafka clients and applications to Kafka brokers, as well as connections from Kafka brokers to ZooKeeper nodes.
+Authorization of client operations such as creating, deleting, and altering the configuration of topics; writing events to or reading events from a 
+topic; creating and deleting ACLs. Administrators can also define custom policies to put in place additional restrictions, 
+such as a CreateTopicPolicy and AlterConfigPolicy (see KIP-108 and the settings
+When securing a multi-tenant Kafka environment, the most common administrative task is the third category (authorization), i.e., managing the user/client permissions that grant or deny access to certain topics and thus to the data stored by users within a cluster. 
+This task is performed predominantly through the setting of access control lists (ACLs). 
+
+60 brokers
+50k partitions (replication factor 2)
+800k messages/sec in
+300 MB/sec inbound, 1 GB/sec+ outbound
+
+listeners=PLAINTEXT://host.name:port,SSL://host.name:port
+
+=========
+Goup coordinator is a Broker
+First consumer to join the consumer group is elected as the Group leader.Exceute the 
+
+What is Avro schemas.
+Avro is data serialization system.It is defind by the schemas.(Written in Json)
+Avro needs less encoding as part of the data since it's stores names and types in the schema reducing duplication.
+Avro schemas helps in keeping your data clean and robust.performance is good unless you are going above one million records 
+per second.Data is not readable it will need some tool or deserialization to read it.
+
+Confluent Schemas registry stores Avro Schemas for Kafka production and consumers,checking schema compatibility for Kafka for managing provide 
+
+https://www.youtube.com/watch?v=nDp6Rzs1SUI
+RESTful interface
+
+========
+60) How many Kafka partitions is too many?
+But here are a few general rules: maximum 4000 partitions per broker (in total; distributed over many topics) maximum 200,000 partitions per Kafka cluster 
+(in total; distributed over many topics) resulting in a maximum of 50 brokers per Kafka cluster.
+
+With 5 brokers it makes autoscaling the Kafka cluster to 4 vCPU and 12 GB memory we are able to sustain 200 million events per hour or 55,000 events per second simple.
+For example, if you can create a maximum of 50 topics on your Message Queue for Apache Kafka instance, you can create a maximum of 100 consumer groups on the instance
+==
+ you cannot create the Kafka topic with replication factor greater than your broker
+
+
+61) What is the use of Kafka schema registry?
+Schema Registry lives outside of and separately from your Kafka brokers. Your producers and consumers still talk to 
+Kafka to publish and read data (messages) to topics. Concurrently, they can also talk to Schema Registry 
+to send and retrieve schemas that describe the data models for the messages.
+
+62) Kafka Security Protocols
+
+PLAINTEXT
+SASL_PLAINTEXT
+SASL_SSL >> Authendication we use in IBM
+SSL(TLS encryption)
+
+eg 3 partitons and 3 replications
+each partition created 2 replicats 
+p1 partitions 2 replicats
+p2 partitions 2 replicas
+p3 partitonns 2 replicas
+
+for 3 partitons 6 replicas 
+=============
+Kafka uses SASL to perform authentication. It currently supports many mechanisms including PLAIN , SCRAM , OAUTH and GSSAPI and it allows administrator to plug custom implementations.
+Authentication can be enabled between brokers, between clients and brokers and between brokers and ZooKeeper.
+
+63)Creating the Kafka users for accessing the topics 
+kafka-configs.sh --zookeeper localhost:2182 --zk-tls-config-file config/zookeeper-client.properties --entity-type users --entity-name
+ broker-admin --alter --add-config 'SCRAM-SHA-512=[password=yhjdlJkOl]'
+
+inside server.properties file
+security.inter.broker.protocal=SASL_SSL
+ssl.protocol=TLSv1.2 
+ssl.client.auth=no
+
+64) You are building a consumer application that processes events from a Kafka topic. What is the most important metric to monitor to ensure 
+real-time processing? >> records-lag-max
+
+65) Topics are made of partitions,Partitions is made of segments and Segments are made of of messages each of these messages get an offset.
+
+IMP:-https://www.youtube.com/watch?v=U0XennY3_Ac >> for SASL_SSL
+
+46248530
+
+46248530
+
+Vidya Nitin Babar(vbabar)
+
+Realtime Streaming(Kafka)
+
+100918518
+
+Foot Locker
+
+1-Sep-22
+
+31-Dec-22
+
+good so learn from some online resource and that should be it
+If you want to learn faster please follow some online training courses.
+============
+
+If you want to learn faster please follow some online training courses.
+good so learn from some online resource and that should be it
+
+3,78,000
+
+https://www.youtube.com/watch?v=U0XennY3_Ac >>SASL_SSL 
+https://forms.office.com/r/qHVhy9gMD0
+
+In Avro, adding an element to an enum without a default is a Breaking__ schema evolution
+In Avro, adding a field to a record without default is a forward__ schema evolution
+
+https://github.com/vinclv/data-engineeri
+
+
+For Apache Kafka Administration this is the Kafka Certification Course name right.
+Confluent Certified Administrator for Apache Kafka®(CCAAK).
+
+
+I have taken the Stephane Maare's Apache kafka courses from Udemy.
+
+
+I have taken Stephane Maare's Apache kafka course from Udemy.
+
+https://capgemini.udemy.com/course/kafka-cluster-setup
+https://capgemini.udemy.com/course/apache-kafka-security
+
+https://training.confluent.io/examdetail/confluent-admin-exam
+
+==========================
+
+Cosumer wants to pull the messages and consumer can pull the messages from topic or from partition level.
+Consumer requested to kafka cluster  I need some data from kafka topic  so need to set the configuration setting  on consumer level.
+how many messages kafka topic  will give to the consumer on at a time that setting we need to do from consumer side this phonomenon will do the 
+consumer.poll() API usng this API consumer send request to Kafka cluster topic so inside poll () API consumer set how many records he wants from 
+kafka cluster topic one at a time ex. consumer wants maximum 15 records on time for this configuration we called max.poll.records=15
+then consumer process on this data after processing consumer let the kafka cluster know I have process on this data means that 15 records.
+this process called aknowledgement for that aknowledgment is called Consumer.commit() means consumer let clusetr know I have process these messages.
+Kafka aways stored the information related to consumer group not for consumer.
+Current offset means stored the information about how many messages send from kafka cluster topic to consumer.
+so kafka stored this information using current offset.if kafka send the 15 record of data to consumer so kafka stored this information inside the current offset:15 
+means 15 record sends to consumer.
+
+so outof this 15 records consumer send  the acknowledment to kafka clutsre that he has process on 10 records.
+so you can commit this 10 records.so this process will completed using Consumer.commit()
+consumers actually processes the messages and informed to kafka cluster that commit these process records to kafka cluster stored this information 
+always commited offsets are not more than current offset.When consumer give the aknowlegment to kafka cluster that acknowlegement are three types
+mainly two types Auto.commit auto commit means when consumer received the messages or records from kafka cluster at that time consumer not required to 
+give acknowlegement to kafka cluster after some defined time kafka cluster automatically commit those messages without consumer confirmation.In auto commit When at that time
+if consumer crash at the time of message processing so because of auto commit data has been lost so rearly used this command because data lost will happend
+Manual commit will happened when consumer acknowledge to Kafka cluster  I have process these messages or records so manual commit will prevent the data lost.
+Kafka cluster will wait for consumer acknowlegemnent then only commit those offsets in Manual commit.
+Manual commits having two types processes  all the poll messages on at a time then give the acknowlement to Kafka Cluster and other one is
+consumer poll all the requirement messages and give the acknoledment one by one to kafka cluster means process on each message and give the acknowlegment for 
+each message.
+log end offset means now on partiotion how many messages are available.
+
+
+What  is consumer group is a logical entity in Kafka ecosystem which mainly provides Parallel processing/Scalable message consumption to consumer client.
+Each consumer must be accociated with Consumer group 
+Make sure no duplication within consumers who are part of the same consumer group.
+
+ 
+Concept of consumer We have created one Topic MyTopic with three partitions and c1,c2 and c3 consumers are inside the myGroup ConsumerGroup.
+so C1 subcribe to P0 partition and C2 subscribe the p1 Partition anc C3 subscribe to P2 Partition so myGropu consumer subcribe to MyTopic.
+If I add C4 consumer inside MyGroup consumerGroup then C4 will stay ideal means no duplication happened here 
+what is Consumer group rebancing 
+
+=============
+https://www.youtube.com/watch?v=TGKUYoegrDY&list=PLxv3SnR5bZE82Cv4wozg2uZvaOlDEbO67
+https://www.youtube.com/watch?v=tk5cUqQA9E8 >> 3
+https://www.youtube.com/watch?v=6TmM13EBhMU&t=5s >> 7
+https://www.youtube.com/watch?v=RBI3R5tgyZY&t=8s >> 8
+https://www.youtube.com/watch?v=OQ0xYZ_H3LM&list=PLxv3SnR5bZE82Cv4wozg2uZvaOlDEbO67&index=13 >> #Demo of Kafka internals | Demonstration of kafka producer, consumer & consumer group internals |#13
+https://www.youtube.com/watch?v=e5gijRkXeyg >>15 >> Kafka producer config >> Done
+https://www.youtube.com/watch?v=n5kxkFNTZZ0 >>12 >> Need to prepared doc >>  done
+https://www.youtube.com/watch?v=zVSaT0glaX8 >>11 >> Done
+https://www.youtube.com/watch?v=HEmvGLi2Fmo >>16 Not mentioned video number Producer configuration >> Done
+https://www.youtube.com/watch?v=m9hofCYzH3g >>17 Not mentioned video number Consumer Configuration >> Done
+https://www.youtube.com/watch?v=wVTPTnAW7D8 >>  Not mentioned video number Consumer Configuration >> Done 
+https://www.youtube.com/watch?v=N1pqDgaeNWU >> SSL/TLS
+https://www.youtube.com/watch?v=hR_OuiqLgOo
+https://www.youtube.com/watch?v=6TmM13EBhMU&t=5s
+https://www.youtube.com/watch?v=oQv8RNoT534 >>SSL imp
+
+
+Kafa Producer configs
+
+Below all config are related to each other for increasing the Kafka producer throughput so used this 
+
+Producer is not directally sending the records to kafka cluster first create the  batch which has collection of records stored inside the RAM's buffer memory
+fill the records inside buffer memory as long as  batch.size limit will not cross and unless check the linger.ms time in that specific time interval if 
+the producer  will not send the records in linger.ms time frame.If linger.ms size is 0 then it will not delayed to create the batch it will send the records
+to kafka cluster immediately 
+
+1) compression.type >> The compression type for all data generated by the producer. Used for compress the messages.Defaut value is none.No compression.
+compression is of full batches of data not on individual data or record ,so effeciency of batching will also impact the compression ration (more batching means better compression).
+Menas 100 MB compress to 30 MB
+Kafka has supported 4 types of compression
+gzip,snappy,lz4 and zstd.
+
+2) batch.size >> The producer will attempt to batch records toghether into fewer requests wherever multiple records are being sent to the same partition.
+This helps performance on both the client and the server.This configuration controls the  default batch size in bytes.If batch default size is 16 kb then for 20kb it will not create batch
+this will send all 20kb on at a time to kafka cluster from producer it will not break in 16kb and create the batch.
+Requests sent to brokers will contain multiple batches one for each partition with data available to be sent.A small batch size will make batching less common
+and may reduce throughput( A batch size 0 will disable batching entirely.A very large batch size may use memory a bit more wastefully as we will always allocate the buffer 
+of specified batch size in aniticipation of additional records.
+
+
+3) linger.ms >> The producer groups together any records that arrive in between request transmission into a single batched request.
+Rather than immediately sending out a record the producer will wait for up to the given delay (linger.ms)to allow other records to send to that the sends
+can be batch together.
+Producer wait for linger.ms time which is in milisecond producer will wait for this linger.ms time to batch the records.
+
+4)buffer.memory >> Inside the producer m/c's RAM memory Inside this RAM memory  allocated the memory  for each producer is called buffer memory.
+RAM memory used for buffer memory for storing the batched.Inside this buffer memory bunch of records stored by producer.Here also defined the timelimit for storing the records or data is called linger.ms and also 
+we call defined size limit for buffer memory.
+
+Total bytes of memory the producer waiting to be sent to the server.If records are sent faster than they can be delivered to the server the producer will 
+block for max.block.ms after which it will be throw an exception.Some addition memory used for compression (if compression is enabled) as well as for maintaning the 
+inping requests.Mainly buffer memoey used for batch the records.
+
+
+5) max.request.size >> When producer send the request to the kafka cluster so maximum size limit  defined here is called max.request.size in bytes.
+
+batch size request is not more than max.size request.If batch size is large tham max.request.size then records will not send via networks 
+
+What is bootstrap server >> A list of host/part pairs to use for establishing  initial connection from producder to the kafka cluster that connection is called bootstrp server
+
+this list should be in the form of host1:port1,host2:port2,host3:port3.Since these servers are just used for initial connection to discover the full cluster membership 
+which may change dynamically this list need not contain the full set of servers.
+
+
+
+When we create producers in Kafka then we need to pass some parameter and properties and configuration.
+So for this we need to pass compression and bootsrapserver configuration and  security protocols 
+inside producer.properties
+
+bootstrap.servers=localhost:9092
+
+compression.type
+
+client id >> Generally use for debugging Used to trace the request. Means when for every procedure we can create client id but this is optional 
+Using which request kafka cluster was hung and crash so we can find out that producer and request using client id option.
+No default value if we not defined the value it will auto genetare the client id 
+
+key.serializer:-Serialization is the process of converting an object  into stream of bytes means producer sending the messages into kay and value format and 
+convert that values into stream of bytes because of we need to transmit the messages through the Network.
+
+serialization class for kay that implements the org.apache.kafka.common.serialization.Serializer interface
+
+value.serializer >> same like kay serializer
+
+connections.max.idle.ms: In this case if producer not sending the messages it is idle then kafka cluster waiting for specific mentioned time and after that
+time close the connection.
+
+Close idle connections after the number of miliseconds specified by this config.
+Type:long 
+Default:  540000 >> Menas 9 mins
+Importance :medium 
+Valid Value :
+
+Acks Config:- Acks means Acknowledgement.When producer sends records, it waits for the Ack from cluster.
+Three settings are possible 
+Acks:0 >> In this proceducer will not wait for any ack  from kafka server and just sending the messages one by one without ack from cluster.
+In this case not guarantee can be made that the server has received the record in this case.
+
+Acks:1;DEFAULT >> In this case kafka cluster leader will send the ack to producer when he will received the messages and leader write the message on his disk.
+Leader will responce without waiting full ack from all follower means Leader not waiting for follower ack whether they are replicated or not.
+In this case if leader fail immediately after ackowledgement the record but brfore the followers  have replicated  it then the record will be lost.
+
+Acks:  -1 or all  >> In this case producer send the records to kafka cluster then leader received this messages write and also waiting for follower responce 
+once followers received this messages and wite on disk then only kafka cluster send the records received ack to producer
+this is the strongest gurantee that message will not be lost as long as at least one in-sync replica remains live.This is equivalent to the acks=all setting.
+This senario takes lots of time for producer acks from kafka cluster.
+
+Consumer Configs
+1) bootstrap.server >> Same like producer
+2) Client.id >> Same like producer
+3)key.deserializer >> Deserializer is the process of converting a stream of bytes into an object.
+serialization class for kay that implements the org.apache.kafka.common.serialization.Deserializer interface.Defauly value is byteArrayDeserializer
+
+4) value.deserializer >> Reverse of  value.serializer
+
+5)group.id >> Mendatoey configuration string type Every consumer assined with ConsumerGroup.
+ConsumerGroup is part of which group id that defined inside group.id field.This String should be unique 
+this group.id identifies the consumer group this consumer belongs to.
+
+
+6)fetch.min.bytes >> The minimum amount of data the server should return for fetch request.
+If insufficient data is available the request will wait for that much data to accumulate before anwering the request.
+the default settin is 1 byte means that fetch request will answered as soon as a single bytes of data is available or the fetch request times out
+waiting for data arrive.
+do not put more that 1 bytes because server throughput a bit at the cost of some additional latency latency menas delay.
+
+7) fetch.max.bytes>> Maximum amount of data that server should return to consumer while poll request generated from cosumer to kafka cluster
+
+8) heartbeat.interval.ms >> The expected time between heartbeats to the consumer coordinator when using kafka's group management facilities.
+consumer coordinator means one of the broker where consumer coordinate with that broker.heartbeats are used to ensure that the consumer's sessions 
+stays active and to facilitate rebalancing when new consumers join or leave the group.
+Th value must be set lower that session.Timeout.ms,but typically should be set no higher than 1/3 of that value 
+
+Default value is :3000 ms means every 3 sec consumer send heartbeat to group coordinator to let the group coordinator knoes this consumer is alive.
+
+9) session.timeout.ms : in this case if consumer not send the heartbeat to group coordinate within 10 sec's  I am alive if not sending 
+heardbeat in 10secs then group coordinator  considered that consumer dead and thrown out from the consumer group.
+
+The client sends periodic heartbeats to indicate its liveness to the group coordinator.If not heartbeats are received by the broker the expiration of this 
+session timeout then broker will remove this client from the group and initiat rebalance.Value in the broket configuration by group.min.seesion.timeout.ms
+and group.max.session.timeout.ms
+Default :10000 means 10 secs
+
+10) max.partition.fetch.bytes : from one partition maximum how much data or recoreds we need to poll for kafka cluster brokers partition to consumer that value here we need to defined.
+maximum record batch size accepted by the broker is defined via message.max.bytes (broker config) or max.message.bytes (topic config)
+
+11) fetch.max.value : for limiting the consumer request size 
+
+Kafka supported three clients
+1) Producer client
+2) Consumer client
+3) Admin client 
+
+Kafka Controller Node:-
+In a Kafka Cluster,one of the brokers servers as  the controller,which is responsible for managing the states of partition and replicas
+and for managing the states of partiton and replicas and for performing administrative tasks like reassigning partitions.
+
+ these below states or transitions managed by controller broker.
+
+Partitions state:-
+1) Non-ExistentPartiton:-that means no partition is created.This state indicates that the partition was either never created or was created and then deleted.
+2) New Partition:-After creation, the partition is in the NewPartiton state.In this state,the partition should have replicas assigned to it,but no leader/ISR yet.
+3) OnlinePartition:-Once a leader is elected for a partition,it is in the online partition state.In this state producer and consumer both are working on this online partition.
+4) Offline Partition:-If after succesfully leader election,the leader for partition dies,then the partition moves to the offlinePartition state.
+
+Replication State:-
+1) New Replica : When replica are created during topic creation or partition reassignment.In this state, a replica can only get become follower state
+change request.
+
+2) OnlineReplica : Once a replica is stared and part of the assigned replica for its partition,it is in this state,it can get either become leader or 
+become  follower state change requests.
+3) OfflineReplica : If a replica dies,it moves to this state.This happenes when the broker hosting the replica in down.
+4) NonExistentReplica:-When replica is deleted,it is moved to this state.
+
+bin/kafka-topic.sh --bootstrap-server localhost:9092,localhost:9093 --create --topic test-topic --partitions 1 --replication=factort 2
+
+bin/kafka-topic.sh --bootstrap-server localhost:9092 --describe --topic test-topic
+
+bin/kafka-topic.sh --bootstrap-server localhost:9092,localhost:9093 --alter  --topic test-topic --partitions 2 >>  This way we can increase the partitions.
+
+
+We can increase the partition but we never reduce the partitions when we reduced the partition data lost will happened.
+In Kafka cluster only one controller node is available 
+
+
+Partition Re-assignment
+Move partitions across brokers 
+Selectively move replicas of a partition to a specific set of brokers
+Increasing the replication factor 
+
+How to use the Re-assignment commands.
+bin/kafka-reassign-partitions.sh  --zookeeper localhost:2181 --topic-to-move-json-file topicsToMove.json --broker-list *, *3 --generate 	
+bin/kafka-reassign-partitions.sh  --zookeeper localhost:2181 --reassignment-json-file suggestedChange.json --exceute 	
+
+Stored the json format file inside the --reassignment-json-file  
+
+https://www.tutorialkart.com/apache-kafka/apache-kafka-connector/ >> Apache kafka connect  video 
+
+Sankat >>https://capgemini-my.sharepoint.com/personal/venkatesan_parasuraman_capgemini_com/_layouts/15/stream.aspx?id=%2Fpersonal%2Fvenkatesan%5Fparasuraman%5Fcapgemini%5Fcom%2FDocuments%2FRecordings%2FKafka%20Brown%20Bag%20sessions%2D20230202%5F144535%2DMeeting%20Recording%2Emp4&ga=1
